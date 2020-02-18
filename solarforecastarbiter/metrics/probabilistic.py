@@ -6,7 +6,7 @@ import numpy as np
 def brier_score(obs, fx, fx_prob):
     """Brier Score (BS).
 
-        BS = 1/n sum_{i=1}^n (f_i - o_i)^2
+    .. math:: \\text{BS} = 1/n \\sum_{i=1}^n (f_i - o_i)^2
 
     where n is the number of forecasts, f_i is the forecasted probability of
     event i, and o_i is the observed event indicator (o_i=0: event did not
@@ -56,7 +56,7 @@ def brier_score(obs, fx, fx_prob):
 def brier_skill_score(obs, fx, fx_prob, ref, ref_prob):
     """Brier Skill Score (BSS).
 
-        BSS = 1 - BS_fx / BS_ref
+    .. math:: \\text{BSS} = 1 - \\text{BS}_{\\text{fx}} / \\text{BS}_{\\text{ref}}
 
     where BS_fx is the Brier Score of the evaluated forecast and BS_ref is the
     Brier Score of a reference forecast.
@@ -201,7 +201,7 @@ def brier_decomposition(obs, fx, fx_prob):
 def reliability(obs, fx, fx_prob):
     """Reliability (REL) of the forecast.
 
-        REL = 1/n sum_{i=1}^I N_i (f_i - o_{i,avg})^2
+    .. math:: \\text{REL} = 1/n \\sum_{i=1}^I N_i (f_i - o_{i,avg})^2
 
     where n is the total number of forecasts, I is the number of unique
     forecasts (f_1, f_2, ..., f_I), N_i is the number of times each unique
@@ -237,7 +237,7 @@ def reliability(obs, fx, fx_prob):
 def resolution(obs, fx, fx_prob):
     """Resolution (RES) of the forecast.
 
-        RES = 1/n sum_{i=1}^I N_i (o_{i,avg} - o_{avg})^2
+    .. math:: \\text{RES} = 1/n \\sum_{i=1}^I N_i (o_{i,avg} - o_{avg})^2
 
     where n is the total number of forecasts, I is the number of unique
     forecasts (f_1, f_2, ..., f_I), N_i is the number of times each unique
@@ -274,9 +274,13 @@ def resolution(obs, fx, fx_prob):
 def uncertainty(obs, fx, fx_prob):
     """Uncertainty (UNC) of the forecast.
 
-        UNC = base_rate * (1 - base_rate)
+    UNC = base_rate * (1 - base_rate)
 
-    where base_rate = 1/n sum_{i=1}^n o_i, and o_i is the observed event.
+    where
+
+    ..math :: \\text{base_rate} = 1/n \\sum_{i=1}^n o_i,
+
+    and o_i is the observed event.
 
     Parameters
     ----------
@@ -307,7 +311,7 @@ def uncertainty(obs, fx, fx_prob):
 def sharpness(fx_lower, fx_upper):
     """Sharpness (SH).
 
-        SH = 1/n sum_{i=1}^n (f_{u,i} - f_{l,i})
+    .. math:: \\text{SH} = 1/n \\sum_{i=1}^n (f_{u,i} - f_{l,i})
 
     where n is the total number of forecasts, f_{u,i} is the upper prediction
     interval value and f_{l,i} is the lower prediction interval value for
@@ -334,12 +338,15 @@ def sharpness(fx_lower, fx_upper):
 def continuous_ranked_probability_score(obs, fx, fx_prob):
     """Continuous Ranked Probability Score (CRPS).
 
-        CRPS = 1/n sum_{i=1}^n int (F_i - O_i)^2 dx
+    .. math:: \\text{CRPS} = 1/n \\sum_{i=1}^n \\int (F_i - O_i)^2 dx
 
     where F_i is the CDF of the forecast at time i and O_i is the CDF
     associated with the observed value obs_i:
 
-        O_{i, j} = 1 if obs_i <= fx_{i, j}, else O_{i, j} = 0
+    .. math:: O_{i, j} = \\begin{cases}
+              1 & \\text{if} \\, \\text{obs}_i \\leq \\text{fx}_{i, j} \\\\
+              0 & \\text{otherwise}
+              \\end{cases}
 
     where obs_i is the observation at time i, and fx_{i, j} is the forecast at
     time i for CDF interval j.
